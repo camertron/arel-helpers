@@ -26,9 +26,9 @@ describe ArelHelpers::JoinAssociation do
     it "should work for two models, one directly associated and the other indirectly" do
       Post
         .joins(join_association(Post, :comments))
-        .joins(join_association(Comment, :commenter))
+        .joins(join_association(Comment, :author))
         .to_sql.should ==
-          'SELECT "posts".* FROM "posts" INNER JOIN "comments" ON "comments"."post_id" = "posts"."id" INNER JOIN "commenters" ON "commenters"."comment_id" = "comments"."id"'
+          'SELECT "posts".* FROM "posts" INNER JOIN "comments" ON "comments"."post_id" = "posts"."id" INNER JOIN "authors" ON "authors"."comment_id" = "comments"."id"'
     end
 
     it "should be able to handle multiple associations" do

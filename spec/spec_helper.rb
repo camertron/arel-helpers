@@ -24,10 +24,10 @@ end
 class Comment < ActiveRecord::Base
   include ArelHelpers::ArelTable
   belongs_to :post
-  has_one :commenter
+  has_one :author
 end
 
-class Commenter < ActiveRecord::Base
+class Author < ActiveRecord::Base
   include ArelHelpers::ArelTable
   belongs_to :comment
 end
@@ -39,7 +39,9 @@ end
 
 class CreatePostsTable < ActiveRecord::Migration
   def change
-    create_table :posts
+    create_table :posts do |t|
+      t.column :title, :string
+    end
   end
 end
 
@@ -51,9 +53,9 @@ class CreateCommentsTable < ActiveRecord::Migration
   end
 end
 
-class CreateCommentersTable < ActiveRecord::Migration
+class CreateAuthorsTable < ActiveRecord::Migration
   def change
-    create_table :commenters do |t|
+    create_table :authors do |t|
       t.references :comment
     end
   end
@@ -85,7 +87,7 @@ RSpec.configure do |config|
     silence do
       CreatePostsTable.new.change
       CreateCommentsTable.new.change
-      CreateCommentersTable.new.change
+      CreateAuthorsTable.new.change
       CreateFavoritesTable.new.change
     end
   end
