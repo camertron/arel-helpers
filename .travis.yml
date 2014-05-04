@@ -5,3 +5,8 @@ rvm:
   - 2.1.0
 script: 'bundle exec rspec'
 before_script: 'gem install bundler'
+env:
+  'export AR="~> 3.1.0"'
+  'export AR="~> 3.2.0"'
+  'export AR="~> 4.0.0"'
+  'export AR="~> 4.1.0"'
