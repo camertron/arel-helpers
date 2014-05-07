@@ -39,7 +39,7 @@ Post.where(Post[:id].eq(1))
 
 ### JoinAssociation Helper
 
-Using pure Arel is probably one of the only ways to do an outer join with ActiveRecord. For example, let's say we have these two models:
+Using pure Arel is one of the only ways to do an outer join with ActiveRecord. For example, let's say we have these two models:
 
 ```ruby
 class Post < ActiveRecord::Base
@@ -59,7 +59,7 @@ Post.joins(:comments)
 
 ActiveRecord introspects the association between posts and comments and automatically chooses the right columns to use in the join conditions.
 
-Things start to get messy however if you wanted to do an outer join instead of the default inner join. Your query might look like this:
+Things start to get messy however if you want to do an outer join instead of the default inner join. Your query might look like this:
 
 ```ruby
 Post
@@ -110,7 +110,7 @@ class PostQueryBuilder < ArelHelpers::QueryBuilder
     reflect(
       query
         .joins(:comments => :author)
-        .where(Author[:username].in(usernames))
+        .where(author[:username].in(usernames))
     )
   end
 
@@ -143,7 +143,7 @@ PostQueryBuilder.new
 
 ## Requirements
 
-No external requirements. Depends on SQLite for testing purposes.
+Requires ActiveRecord >= 3.1.0, <= 4.1.0, tested with Ruby 1.9.3, 2.0.0, and 2.1.0. Depends on SQLite for testing purposes.
 
 ## Running Tests
 
