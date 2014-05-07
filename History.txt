@@ -5,3 +5,7 @@
 == 1.1.0
 
 * Adding the QueryBuilder class.
+
+== 1.2.0
+
+* Adding Rails 4 support.
