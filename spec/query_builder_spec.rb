@@ -44,4 +44,11 @@ describe ArelHelpers::QueryBuilder do
     Post.create(title: "Foobar")
     builder.map(&:title).should == ["Foobar"]
   end
+
+  ArelHelpers::QueryBuilder::TERMINAL_METHODS.each do |method|
+    it "does not enumerate records for #{method}" do
+      mock(builder).each.never
+      builder.public_send(method)
+    end
+  end
 end
