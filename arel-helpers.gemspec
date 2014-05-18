@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   if ENV["AR"]
     s.add_dependency 'activerecord', ENV["AR"]
   else
-    s.add_dependency 'activerecord', '>= 3.1.0', '<= 4.1.0'
+    s.add_dependency 'activerecord', '>= 3.1.0', '< 5'
   end
 
   s.require_path = 'lib'
