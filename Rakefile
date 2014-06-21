@@ -18,7 +18,9 @@ RSpec::Core::RakeTask.new do |t|
 end
 
 task :console do
-  require './spec/env'
+  $:.push(File.dirname(__FILE__))
+
+  require 'spec/env'
   require 'pry-nav'
 
   ArelHelpers::Env.establish_connection
