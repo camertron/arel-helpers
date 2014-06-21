@@ -1,9 +1,13 @@
 # encoding: UTF-8
 
+$:.push(File.dirname(__FILE__))
+
 require 'rspec'
 require 'arel-helpers'
 require 'fileutils'
 require 'pry-nav'
+
+require 'env'
 
 def silence(&block)
   original_stdout = $stdout
@@ -15,80 +19,11 @@ def silence(&block)
   end
 end
 
-class Post < ActiveRecord::Base
-  include ArelHelpers::ArelTable
-  has_many :comments
-  has_many :favorites
-end
-
-class Comment < ActiveRecord::Base
-  include ArelHelpers::ArelTable
-  belongs_to :post
-  has_one :author
-end
-
-class Author < ActiveRecord::Base
-  include ArelHelpers::ArelTable
-  belongs_to :comment
-end
-
-class Favorite < ActiveRecord::Base
-  include ArelHelpers::ArelTable
-  belongs_to :post
-end
-
-class CreatePostsTable < ActiveRecord::Migration
-  def change
-    create_table :posts do |t|
-      t.column :title, :string
-    end
-  end
-end
-
-class CreateCommentsTable < ActiveRecord::Migration
-  def change
-    create_table :comments do |t|
-      t.references :post
-    end
-  end
-end
-
-class CreateAuthorsTable < ActiveRecord::Migration
-  def change
-    create_table :authors do |t|
-      t.references :comment
-    end
-  end
-end
-
-class CreateFavoritesTable < ActiveRecord::Migration
-  def change
-    create_table :favorites do |t|
-      t.references :post
-    end
-  end
-end
-
 RSpec.configure do |config|
   config.mock_with :rr
 
-  db_dir = File.join(File.dirname(File.dirname(__FILE__)), "tmp")
-  db_file = File.join(db_dir, "test.sqlite3")
-
   config.before(:each) do
-    File.unlink(db_file) if File.exist?(db_file)
-    FileUtils.mkdir_p(db_dir)
-
-    ActiveRecord::Base.establish_connection(
-      :adapter  => "sqlite3",
-      :database => db_file
-    )
-
-    silence do
-      CreatePostsTable.new.change
-      CreateCommentsTable.new.change
-      CreateAuthorsTable.new.change
-      CreateFavoritesTable.new.change
-    end
+    ArelHelpers::Env.establish_connection(db_file)
+    silence { ArelHelpers::Env.migrate }
   end
 end

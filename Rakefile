@@ -16,3 +16,14 @@ desc 'Run specs'
 RSpec::Core::RakeTask.new do |t|
   t.pattern = './spec/**/*_spec.rb'
 end
+
+task :console do
+  require './spec/env'
+  require 'pry-nav'
+
+  ArelHelpers::Env.establish_connection
+  ArelHelpers::Env.reset
+  ArelHelpers::Env.migrate
+
+  Pry.start
+end
