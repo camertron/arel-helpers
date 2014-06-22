@@ -9,3 +9,7 @@
 == 1.2.0
 
 * Adding Rails 4 support.
+
+== 2.0.0
+
+* Turning JoinAssociation into an ActiveSupport::Concern (breaks backwards compatibility).

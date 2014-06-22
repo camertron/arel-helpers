@@ -70,23 +70,35 @@ Post
   )
 ```
 
-Such verbose. Much code. Very bloat. Wow. We've lost all the awesome association introspection that ActiveRecord would otherwise have given us. Enter `ArelHelpers::JoinAssociation`:
+Such verbose. Much code. Very bloat. Wow. We've lost all the awesome association introspection that ActiveRecord would otherwise have given us. Enter `ArelHelpers.join_association`:
 
 ```ruby
-include ArelHelpers::JoinAssociation
-Post.joins(join_association(Post, :comments, Arel::OuterJoin))
+Post.joins(ArelHelpers.join_association(Post, :comments, Arel::OuterJoin))
 ```
 
 Easy peasy.
 
-`JoinAssociation` also allows you to customize the join conditions via a block:
+`#join_association` also allows you to customize the join conditions via a block:
 
 ```ruby
 Post.joins(
-  join_association(Post, :comments, Arel::OuterJoin) do |assoc_name, join_conditions|
+  ArelHelpers.join_association(Post, :comments, Arel::OuterJoin) do |assoc_name, join_conditions|
     join_conditions.and(Post[:author_id].eq(4))
   end
 )
+```
+
+But wait, there's more! Include the `ArelHelpers::JoinAssociation` concern into your models to have access to the `join_association` method directly from the model's class:
+
+```ruby
+include ArelHelpers::JoinAssociation
+
+Post
+  .joins(
+    Post.join_association(:comments, Arel::OuterJoin) do |assoc_name, join_conditions|
+      join_conditions.and(Post[:author_id].eq(4))
+    end
+  )
 ```
 
 ### Query Builders
