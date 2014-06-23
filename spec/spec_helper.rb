@@ -23,7 +23,8 @@ RSpec.configure do |config|
   config.mock_with :rr
 
   config.before(:each) do
-    ArelHelpers::Env.establish_connection(db_file)
+    ArelHelpers::Env.establish_connection
+    ArelHelpers::Env.reset
     silence { ArelHelpers::Env.migrate }
   end
 end
