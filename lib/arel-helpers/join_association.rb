@@ -5,8 +5,8 @@ module ArelHelpers
   module JoinAssociation
     extend ActiveSupport::Concern
 
-    included do
-      def self.join_association(association, join_type = Arel::InnerJoin, &block)
+    module ClassMethods
+      def join_association(association, join_type = Arel::InnerJoin, &block)
         ArelHelpers.join_association(self, association, join_type, &block)
       end
     end
