@@ -26,7 +26,7 @@ describe ArelHelpers do
         .joins(ArelHelpers.join_association(Post, :comments))
         .joins(ArelHelpers.join_association(Comment, :author))
         .to_sql.should ==
-          'SELECT "posts".* FROM "posts" INNER JOIN "comments" ON "comments"."post_id" = "posts"."id" INNER JOIN "authors" ON "authors"."comment_id" = "comments"."id"'
+          'SELECT "posts".* FROM "posts" INNER JOIN "comments" ON "comments"."post_id" = "posts"."id" INNER JOIN "authors" ON "authors"."id" = "comments"."author_id"'
     end
 
     it "should be able to handle multiple associations" do

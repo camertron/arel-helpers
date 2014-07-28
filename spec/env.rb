@@ -27,6 +27,7 @@ module ArelHelpers
         CreateCommentsTable.new.change
         CreateAuthorsTable.new.change
         CreateFavoritesTable.new.change
+        CreateCollabPostsTable.new.change
       end
 
       def reset
