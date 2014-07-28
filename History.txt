@@ -13,3 +13,8 @@
 == 2.0.0
 
 * Turning JoinAssociation into an ActiveSupport::Concern (breaks backwards compatibility).
+
+== 2.0.1
+
+* Define ArelHelpers.join_association so people can use join_association functionality without relying on autoloading. (@peeja, github issue #8)
+
