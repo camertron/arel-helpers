@@ -65,7 +65,7 @@ Things start to get messy however if you want to do an outer join instead of the
 Post
   .joins(
     Post.arel_table.join(Comments.arel_table, Arel::OuterJoin)
-      .on(Post[:id].eq(Coments[:post_id]))
+      .on(Post[:id].eq(Comments[:post_id]))
       .join_sources
   )
 ```
