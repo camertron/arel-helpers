@@ -10,4 +10,9 @@ describe ArelHelpers::ArelTable do
       post_id.relation.name.should == "posts"
     end
   end
+
+  it "should not interfere with associations" do
+    post = Post.create(title: "I'm a little teapot")
+    post.comments[0].should be_nil
+  end
 end
