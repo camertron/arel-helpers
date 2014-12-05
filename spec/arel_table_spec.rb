@@ -15,4 +15,10 @@ describe ArelHelpers::ArelTable do
     post = Post.create(title: "I'm a little teapot")
     post.comments[0].should be_nil
   end
+
+  it "should allow retrieving associated records" do
+    post = Post.create(title: "I'm a little teapot")
+    comment = post.comments.create
+    post.reload.comments[0].id.should == comment.id
+  end
 end
