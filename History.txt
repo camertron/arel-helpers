@@ -18,3 +18,6 @@
 
 * Define ArelHelpers.join_association so people can use join_association functionality without relying on autoloading. (@peeja, github issue #8)
 
+== 2.0.2
+
+* Fix issue causing CollectionProxy#[] to return Arel::Attribute objects instead of model instances. See https://github.com/camertron/arel-helpers/pull/11
