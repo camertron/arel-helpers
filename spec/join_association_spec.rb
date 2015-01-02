@@ -10,7 +10,7 @@ describe ArelHelpers do
     end
 
     it "should work with an outer join" do
-      Post.joins(ArelHelpers.join_association(Post, :comments, Arel::OuterJoin)).to_sql.should ==
+      Post.joins(ArelHelpers.join_association(Post, :comments, Arel::Nodes::OuterJoin)).to_sql.should ==
         'SELECT "posts".* FROM "posts" LEFT OUTER JOIN "comments" ON "comments"."post_id" = "posts"."id"'
     end
 
@@ -44,6 +44,11 @@ describe ArelHelpers do
         end
       end).to_sql.should ==
         'SELECT "posts".* FROM "posts" INNER JOIN "comments" ON "comments"."post_id" = "posts"."id" AND "comments"."text" = \'Awesome post!\' INNER JOIN "favorites" (ON "favorites"."post_id" = "posts"."id" OR "favorites"."amount" = \'lots\')'
+    end
+
+    it 'should be able to handle has_and_belongs_to_many associations' do
+      CollabPost.joins(ArelHelpers.join_association(CollabPost, :authors)).to_sql.should ==
+        'SELECT "collab_posts".* FROM "collab_posts" INNER JOIN "authors_collab_posts" ON "authors_collab_posts"."collab_post_id" = "collab_posts"."id" INNER JOIN "authors" ON "authors"."id" = "authors_collab_posts"."author_id"'
     end
   end
 end

@@ -155,7 +155,7 @@ PostQueryBuilder.new
 
 ## Requirements
 
-Requires ActiveRecord >= 3.1.0, <= 4.1.0, tested with Ruby 1.9.3, 2.0.0, and 2.1.0. Depends on SQLite for testing purposes.
+Requires ActiveRecord >= 3.1.0, <= 4.2.0, tested with Ruby 1.9.3, 2.0.0, and 2.1.0. Depends on SQLite for testing purposes.
 
 ## Running Tests
 

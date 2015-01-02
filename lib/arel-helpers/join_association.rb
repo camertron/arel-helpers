@@ -17,8 +17,10 @@ module ArelHelpers
       # For example, for HABTM associations, two join statements are required.
       # This method encapsulates that functionality and yields an intermediate object for chaining.
       # It also allows you to use an outer join instead of the default inner via the join_type arg.
-      def join_association(table, association, join_type = Arel::InnerJoin, &block)
-        if ActiveRecord::VERSION::STRING >= '4.1.0'
+      def join_association(table, association, join_type = Arel::Nodes::InnerJoin, &block)
+        if ActiveRecord::VERSION::STRING >= '4.2.0'
+          join_association_4_2(table, association, join_type, &block)
+        elsif ActiveRecord::VERSION::STRING >= '4.1.0'
           join_association_4_1(table, association, join_type, &block)
         else
           join_association_3_1(table, association, join_type, &block)
@@ -60,6 +62,23 @@ module ArelHelpers
                   end
 
           join_type.new(constraint.left, right)
+        end
+      end
+
+      def join_association_4_2(table, association, join_type)
+        associations = association.is_a?(Array) ? association : [association]
+        join_dependency = ActiveRecord::Associations::JoinDependency.new(table, associations, [])
+
+        join_dependency.join_constraints([]).map do |constraint|
+          constraint.joins.map do |join|
+            right = if block_given?
+                      yield join.left.name.to_sym, join.right
+                    else
+                      join.right
+                    end
+
+            join_type.new(join.left, right)
+          end
         end
       end
     end

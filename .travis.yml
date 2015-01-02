@@ -9,3 +9,4 @@ env:
   - 'export AR="~> 3.2.0"'
   - 'export AR="~> 4.0.0"'
   - 'export AR="~> 4.1.0"'
+  - 'export AR="~> 4.2.0"'
