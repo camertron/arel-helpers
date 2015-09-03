@@ -17,8 +17,9 @@ rescue
 end
 
 module ArelHelpers
-  autoload :JoinAssociation, "arel-helpers/join_association"
+  autoload :Aliases,         "arel-helpers/aliases"
   autoload :ArelTable,       "arel-helpers/arel_table"
+  autoload :JoinAssociation, "arel-helpers/join_association"
   autoload :QueryBuilder,    "arel-helpers/query_builder"
 
   def self.join_association(*args, &block)
