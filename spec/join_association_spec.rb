@@ -52,13 +52,19 @@ describe ArelHelpers do
     end
 
     it "allows adding a custom alias to the joined table" do
-      Post.joins(ArelHelpers.join_association(Post, :comments, Arel::Nodes::InnerJoin, aliases: { comments: 'foo' })).to_sql.should ==
-        'SELECT "posts".* FROM "posts" INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id"'
+      Comment.aliased_as(:foo) do |foo|
+        Post.joins(ArelHelpers.join_association(Post, :comments, Arel::Nodes::InnerJoin, aliases: [foo])).to_sql.should ==
+          'SELECT "posts".* FROM "posts" INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id"'
+      end
     end
 
     it "allows aliasing multiple associations" do
-      Post.joins(ArelHelpers.join_association(Post, [:comments, :favorites], Arel::Nodes::InnerJoin, aliases: { comments: 'foo', favorites: 'bar' })).to_sql.should ==
-        'SELECT "posts".* FROM "posts" INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id" INNER JOIN "favorites" "bar" ON "bar"."post_id" = "posts"."id"'
+      Comment.aliased_as(:foo) do |foo|
+        Favorite.aliased_as(:bar) do |bar|
+          Post.joins(ArelHelpers.join_association(Post, [:comments, :favorites], Arel::Nodes::InnerJoin, aliases: [foo, bar])).to_sql.should ==
+            'SELECT "posts".* FROM "posts" INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id" INNER JOIN "favorites" "bar" ON "bar"."post_id" = "posts"."id"'
+        end
+      end
     end
   end
 end

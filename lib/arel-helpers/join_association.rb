@@ -41,8 +41,8 @@ module ArelHelpers
         end
 
         manager.join_sources.map do |assoc|
-          if found_alias = aliases[assoc.left.name.to_sym]
-            assoc.left.table_alias = found_alias
+          if found_alias = find_alias(assoc.left.name, aliases)
+            assoc.left.table_alias = found_alias.name
           end
 
           if block_given?
@@ -67,8 +67,8 @@ module ArelHelpers
             constraint.right
           end
 
-          if found_alias = aliases[constraint.left.name.to_sym]
-            constraint.left.table_alias = found_alias
+          if found_alias = find_alias(constraint.left.name, aliases)
+            constraint.left.table_alias = found_alias.name
           end
 
           join_type.new(constraint.left, right)
@@ -76,7 +76,7 @@ module ArelHelpers
       end
 
       def join_association_4_2(table, association, join_type, options = {})
-        aliases = options.fetch(:aliases, {})
+        aliases = options.fetch(:aliases, [])
         associations = association.is_a?(Array) ? association : [association]
         join_dependency = ActiveRecord::Associations::JoinDependency.new(table, associations, [])
 
@@ -88,13 +88,17 @@ module ArelHelpers
               join.right
             end
 
-            if found_alias = aliases[join.left.name.to_sym]
-              join.left.table_alias = found_alias
+            if found_alias = find_alias(join.left.name, aliases)
+              join.left.table_alias = found_alias.name
             end
 
             join_type.new(join.left, right)
           end
         end
+      end
+
+      def find_alias(name, aliases)
+        aliases.find { |a| a.table_name == name }
       end
     end
   end
