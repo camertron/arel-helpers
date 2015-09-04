@@ -50,6 +50,16 @@ describe ArelHelpers do
       CollabPost.joins(ArelHelpers.join_association(CollabPost, :authors)).to_sql.should ==
         'SELECT "collab_posts".* FROM "collab_posts" INNER JOIN "authors_collab_posts" ON "authors_collab_posts"."collab_post_id" = "collab_posts"."id" INNER JOIN "authors" ON "authors"."id" = "authors_collab_posts"."author_id"'
     end
+
+    it "allows adding a custom alias to the joined table" do
+      Post.joins(ArelHelpers.join_association(Post, :comments, Arel::Nodes::InnerJoin, aliases: { comments: 'foo' })).to_sql.should ==
+        'SELECT "posts".* FROM "posts" INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id"'
+    end
+
+    it "allows aliasing multiple associations" do
+      Post.joins(ArelHelpers.join_association(Post, [:comments, :favorites], Arel::Nodes::InnerJoin, aliases: { comments: 'foo', favorites: 'bar' })).to_sql.should ==
+        'SELECT "posts".* FROM "posts" INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id" INNER JOIN "favorites" "bar" ON "bar"."post_id" = "posts"."id"'
+    end
   end
 end
 
