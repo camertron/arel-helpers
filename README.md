@@ -42,12 +42,29 @@ Post.where(Post[:id].eq(1))
 Using pure Arel is one of the only ways to do an outer join with ActiveRecord. For example, let's say we have these two models:
 
 ```ruby
+class Author < ActiveRecord::Base
+  has_many :posts
+
+  # attribute id
+  # attribute username
+end
+
 class Post < ActiveRecord::Base
+  belongs_to :author
   has_many :comments
+
+  # attribute id
+  # attribute author_id
+  # attribute subject
 end
 
 class Comment < ActiveRecord::Base
   belongs_to :post
+  belongs_to :author
+
+  # attribute id
+  # attribute post_id
+  # attribute author_id
 end
 ```
 
@@ -62,18 +79,19 @@ ActiveRecord introspects the association between posts and comments and automati
 Things start to get messy however if you want to do an outer join instead of the default inner join. Your query might look like this:
 
 ```ruby
-Post
-  .joins(
-    Post.arel_table.join(Comments.arel_table, Arel::OuterJoin)
-      .on(Post[:id].eq(Comments[:post_id]))
-      .join_sources
-  )
+Post.joins(
+  Post.arel_table.join(Comment.arel_table, Arel::Nodes::OuterJoin)
+    .on(Post[:id].eq(Comment[:post_id]))
+    .join_sources
+)
 ```
 
 Such verbose. Much code. Very bloat. Wow. We've lost all the awesome association introspection that ActiveRecord would otherwise have given us. Enter `ArelHelpers.join_association`:
 
 ```ruby
-Post.joins(ArelHelpers.join_association(Post, :comments, Arel::OuterJoin))
+Post.joins(
+  ArelHelpers.join_association(Post, :comments, Arel::Nodes::OuterJoin)
+)
 ```
 
 Easy peasy.
@@ -82,7 +100,7 @@ Easy peasy.
 
 ```ruby
 Post.joins(
-  ArelHelpers.join_association(Post, :comments, Arel::OuterJoin) do |assoc_name, join_conditions|
+  ArelHelpers.join_association(Post, :comments, Arel::Nodes::OuterJoin) do |assoc_name, join_conditions|
     join_conditions.and(Post[:author_id].eq(4))
   end
 )
@@ -93,12 +111,11 @@ But wait, there's more! Include the `ArelHelpers::JoinAssociation` concern into 
 ```ruby
 include ArelHelpers::JoinAssociation
 
-Post
-  .joins(
-    Post.join_association(:comments, Arel::OuterJoin) do |assoc_name, join_conditions|
-      join_conditions.and(Post[:author_id].eq(4))
-    end
-  )
+Post.joins(
+  Post.join_association(:comments, Arel::Nodes::OuterJoin) do |assoc_name, join_conditions|
+    join_conditions.and(Post[:author_id].eq(4))
+  end
+)
 ```
 
 ### Query Builders
