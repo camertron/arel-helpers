@@ -25,3 +25,7 @@
 == 2.1.0
 
 * Adding support for Rails 4.2 (@hasghari, github issue #12)
+
+== 2.1.1
+
+* Fixing issue causing ArelTable instances to get returned when accessing records inside an ActiveRecord::Relation. (@svoynow, #18)
