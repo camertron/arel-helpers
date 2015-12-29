@@ -40,3 +40,30 @@ class CreateCollabPostsTable < ActiveRecord::Migration
     end
   end
 end
+
+class CreateCardsTable < ActiveRecord::Migration
+  def change
+    create_table :cards
+  end
+end
+
+class CreateCardLocationsTable < ActiveRecord::Migration
+  def change
+    create_table :card_locations do |t|
+      t.references :location
+      t.references :card, polymorphic: true
+    end
+  end
+end
+
+class CreateLocationsTable < ActiveRecord::Migration
+  def change
+    create_table :locations
+  end
+end
+
+class CreateCommunityTicketsTable < ActiveRecord::Migration
+  def change
+    create_table :community_tickets
+  end
+end

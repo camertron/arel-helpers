@@ -50,6 +50,16 @@ describe ArelHelpers do
       CollabPost.joins(ArelHelpers.join_association(CollabPost, :authors)).to_sql.should ==
         'SELECT "collab_posts".* FROM "collab_posts" INNER JOIN "authors_collab_posts" ON "authors_collab_posts"."collab_post_id" = "collab_posts"."id" INNER JOIN "authors" ON "authors"."id" = "authors_collab_posts"."author_id"'
     end
+
+    it 'handles polymorphic through associations' do
+      relation = Location.joins(
+        ArelHelpers.join_association(Location, :community_tickets)
+      )
+
+      relation.to_sql.should == 'SELECT "locations".* FROM "locations" ' +
+        'INNER JOIN "card_locations" ON "card_locations"."location_id" = "locations"."id" AND "card_locations"."card_type" = \'CommunityTicket\' ' +
+        'INNER JOIN "community_tickets" ON "community_tickets"."id" = "card_locations"."card_id"'
+    end
   end
 end
 
