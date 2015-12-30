@@ -66,8 +66,10 @@ module ArelHelpers
       end
 
       # ActiveRecord 4.2 moves bind variables out of the join classes
-      # and into the relation. A method like join_association isn't able
-      # to add to the list of bind variables because
+      # and into the relation. For this reason, a method like
+      # join_association isn't able to add to the list of bind variables
+      # dynamically. To get around the problem, this method must return
+      # a string.
       def join_association_4_2(table, association, join_type)
         associations = association.is_a?(Array) ? association : [association]
         join_dependency = ActiveRecord::Associations::JoinDependency.new(table, associations, [])
@@ -90,7 +92,11 @@ module ArelHelpers
           end
         end
 
-        joins.map { |join| to_sql(join, table, binds) }.join(' ')
+        join_strings = joins.map do |join|
+          to_sql(join, table, binds)
+        end
+
+        join_strings.join(' ')
       end
 
       private
