@@ -65,21 +65,40 @@ module ArelHelpers
         end
       end
 
+      # ActiveRecord 4.2 moves bind variables out of the join classes
+      # and into the relation. A method like join_association isn't able
+      # to add to the list of bind variables because
       def join_association_4_2(table, association, join_type)
         associations = association.is_a?(Array) ? association : [association]
         join_dependency = ActiveRecord::Associations::JoinDependency.new(table, associations, [])
 
-        join_dependency.join_constraints([]).map do |constraint|
+        constraints = join_dependency.join_constraints([])
+
+        binds = constraints.flat_map do |info|
+          info.binds.map { |bv| table.connection.quote(*bv.reverse) }
+        end
+
+        joins = constraints.flat_map do |constraint|
           constraint.joins.map do |join|
             right = if block_given?
-                      yield join.left.name.to_sym, join.right
-                    else
-                      join.right
-                    end
+              yield join.left.name.to_sym, join.right
+            else
+              join.right
+            end
 
             join_type.new(join.left, right)
           end
         end
+
+        joins.map { |join| to_sql(join, table, binds) }.join(' ')
+      end
+
+      private
+
+      def to_sql(node, table, binds)
+        visitor = table.connection.visitor
+        collect = visitor.accept(node, Arel::Collectors::Bind.new)
+        collect.substitute_binds(binds).join
       end
     end
   end
