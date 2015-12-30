@@ -56,10 +56,10 @@ module ArelHelpers
 
         join_dependency.join_constraints([]).map do |constraint|
           right = if block_given?
-                    yield constraint.left.name.to_sym, constraint.right
-                  else
-                    constraint.right
-                  end
+            yield constraint.left.name.to_sym, constraint.right
+          else
+            constraint.right
+          end
 
           join_type.new(constraint.left, right)
         end
