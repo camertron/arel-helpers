@@ -28,6 +28,10 @@ module ArelHelpers
         CreateAuthorsTable.new.change
         CreateFavoritesTable.new.change
         CreateCollabPostsTable.new.change
+        CreateCardsTable.new.change
+        CreateCardLocationsTable.new.change
+        CreateLocationsTable.new.change
+        CreateCommunityTicketsTable.new.change
       end
 
       def reset

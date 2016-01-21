@@ -3,6 +3,8 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.1
+before_install:
+  - gem install bundler
 script: 'bundle exec rspec'
 env:
   - 'export AR="~> 3.1.0"'
