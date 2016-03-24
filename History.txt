@@ -36,4 +36,4 @@
 
 == 2.3.0
 
-* Adding support for Rails 5.
+* Adding support for Rails 5 (@vkill #24, @camertron #26)
