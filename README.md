@@ -126,7 +126,7 @@ ArelHelpers also contains a very simple class that's designed to provide a light
 class PostQueryBuilder < ArelHelpers::QueryBuilder
   def initialize(query = nil)
     # whatever you want your initial query to be
-    super(query || post.unscoped)
+    super(query || Post.unscoped)
   end
 
   def with_title_matching(title)
