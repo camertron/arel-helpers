@@ -96,6 +96,23 @@ Post.joins(
 
 Easy peasy.
 
+Note that pretty much anything you can pass to ActiveRecord's `#join` method you can also pass to `#join_association`'s second argument. For example, you can pass a hash to indicate a set of nested associations:
+
+```ruby
+Post.joins(
+  ArelHelpers.join_association(Post, { comments: :author })
+)
+```
+
+This might execute the following query:
+
+```sql
+SELECT "posts".*
+FROM "posts"
+INNER JOIN "comments" ON "comments"."post_id" = "posts"."id"
+INNER JOIN "authors" ON "authors"."id" = "comments"."author_id"
+```
+
 `#join_association` also allows you to customize the join conditions via a block:
 
 ```ruby
