@@ -108,7 +108,7 @@ module ArelHelpers
         constraints = join_dependency.join_constraints([], join_type)
 
         binds = constraints.flat_map do |info|
-          prepared_binds = table.connection.prepare_binds_for_database(info.binds)
+          prepared_binds = info.binds.map(&:value_for_database)
           prepared_binds.map { |value| table.connection.quote(value) }
         end
 
