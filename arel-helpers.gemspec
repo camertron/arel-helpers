@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors  = ["Cameron Dutro"]
   s.email    = ["camertron@gmail.com"]
   s.homepage = "http://github.com/camertron"
-
+  s.license  = 'MIT'
   s.description = s.summary = "Useful tools to help construct database queries with ActiveRecord and Arel."
 
   s.platform = Gem::Platform::RUBY
