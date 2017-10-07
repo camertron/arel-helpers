@@ -23,7 +23,7 @@ module ArelHelpers
     protected
 
     def reflect(query)
-      self.class.new(query)
+      dup.tap { |obj| obj.instance_variable_set('@query'.freeze, query) }
     end
   end
 end
