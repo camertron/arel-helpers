@@ -41,3 +41,9 @@
 == 2.4.0
 
 * Adding support for Rails 5.1 (@hasghari #30)
+
+== 2.5.0
+
+* Add license information to gemspec so it is parsed by verifiers (@petergoldstein #31)
+* Update QueryBuilder#reflect to create deep copy of builder (@wycleffsean #32)
+
