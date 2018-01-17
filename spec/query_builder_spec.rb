@@ -3,6 +3,9 @@
 require 'spec_helper'
 
 class TestQueryBuilder < ArelHelpers::QueryBuilder
+  attr_accessor :params
+  alias_method :params?, :params
+
   def initialize(query = nil)
     super(query || Post.unscoped)
   end
@@ -17,7 +20,10 @@ describe ArelHelpers::QueryBuilder do
 
   it "returns (i.e. reflects) new instances of QueryBuilder" do
     builder.tap do |original_builder|
-      original_builder.noop.object_id.should_not == original_builder.object_id
+      original_builder.params = true
+      new_builder = original_builder.noop
+      new_builder.object_id.should_not == original_builder.object_id
+      new_builder.params?.should == true
     end
   end
 

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-require 'env/models'
 require 'env/migrations'
+require 'env/models'
 
 module ArelHelpers
   class Env
@@ -28,6 +28,10 @@ module ArelHelpers
         CreateAuthorsTable.new.change
         CreateFavoritesTable.new.change
         CreateCollabPostsTable.new.change
+        CreateCardsTable.new.change
+        CreateCardLocationsTable.new.change
+        CreateLocationsTable.new.change
+        CreateCommunityTicketsTable.new.change
       end
 
       def reset

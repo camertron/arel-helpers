@@ -21,4 +21,10 @@ describe ArelHelpers::ArelTable do
     comment = post.comments.create
     post.reload.comments[0].id.should == comment.id
   end
+
+  it "does not interfere with ActiveRecord::Relation objects" do
+    Post.all[0].should be_nil
+    p = Post.create(title: 'foo')
+    Post.all[0].id.should == p.id
+  end
 end

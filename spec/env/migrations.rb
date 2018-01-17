@@ -1,6 +1,8 @@
 # encoding: UTF-8
 
-class CreatePostsTable < ActiveRecord::Migration
+SuperClass = ActiveRecord::VERSION::MAJOR >= 5 && ActiveRecord::VERSION::MINOR >= 1 ? ActiveRecord::Migration[5.1] : ActiveRecord::Migration
+
+class CreatePostsTable < SuperClass
   def change
     create_table :posts do |t|
       t.column :title, :string
@@ -8,7 +10,7 @@ class CreatePostsTable < ActiveRecord::Migration
   end
 end
 
-class CreateCommentsTable < ActiveRecord::Migration
+class CreateCommentsTable < SuperClass
   def change
     create_table :comments do |t|
       t.references :post
@@ -16,7 +18,7 @@ class CreateCommentsTable < ActiveRecord::Migration
   end
 end
 
-class CreateAuthorsTable < ActiveRecord::Migration
+class CreateAuthorsTable < SuperClass
   def change
     create_table :authors do |t|
       t.references :comment
@@ -25,7 +27,7 @@ class CreateAuthorsTable < ActiveRecord::Migration
   end
 end
 
-class CreateFavoritesTable < ActiveRecord::Migration
+class CreateFavoritesTable < SuperClass
   def change
     create_table :favorites do |t|
       t.references :post
@@ -33,10 +35,37 @@ class CreateFavoritesTable < ActiveRecord::Migration
   end
 end
 
-class CreateCollabPostsTable < ActiveRecord::Migration
+class CreateCollabPostsTable < SuperClass
   def change
     create_table :collab_posts do |t|
       t.references :authors
     end
+  end
+end
+
+class CreateCardsTable < SuperClass
+  def change
+    create_table :cards
+  end
+end
+
+class CreateCardLocationsTable < SuperClass
+  def change
+    create_table :card_locations do |t|
+      t.references :location
+      t.references :card, polymorphic: true
+    end
+  end
+end
+
+class CreateLocationsTable < SuperClass
+  def change
+    create_table :locations
+  end
+end
+
+class CreateCommunityTicketsTable < SuperClass
+  def change
+    create_table :community_tickets
   end
 end

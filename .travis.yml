@@ -1,12 +1,14 @@
+sudo: false
 language: ruby
-rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1
+rvm: 2.2.9
+before_install:
+  - gem install bundler
 script: 'bundle exec rspec'
 env:
-  - 'export AR="~> 3.1.0"'
-  - 'export AR="~> 3.2.0"'
-  - 'export AR="~> 4.0.0"'
-  - 'export AR="~> 4.1.0"'
-  - 'export AR="~> 4.2.0"'
+  - 'AR="~> 3.1.0"'
+  - 'AR="~> 3.2.0"'
+  - 'AR="~> 4.0.0"'
+  - 'AR="~> 4.1.0"'
+  - 'AR="~> 4.2.0"'
+  - 'AR="~> 5.0.0"'
+  - 'AR="~> 5.1.0"'

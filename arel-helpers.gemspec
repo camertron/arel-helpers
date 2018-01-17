@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors  = ["Cameron Dutro"]
   s.email    = ["camertron@gmail.com"]
   s.homepage = "http://github.com/camertron"
-
+  s.license  = 'MIT'
   s.description = s.summary = "Useful tools to help construct database queries with ActiveRecord and Arel."
 
   s.platform = Gem::Platform::RUBY
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   if ENV["AR"]
     s.add_dependency 'activerecord', ENV["AR"]
   else
-    s.add_dependency 'activerecord', '>= 3.1.0', '< 5'
+    s.add_dependency 'activerecord', '>= 3.1.0', '< 6'
   end
 
   s.require_path = 'lib'

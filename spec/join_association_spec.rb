@@ -29,6 +29,20 @@ describe ArelHelpers do
           'SELECT "posts".* FROM "posts" INNER JOIN "comments" ON "comments"."post_id" = "posts"."id" INNER JOIN "authors" ON "authors"."id" = "comments"."author_id"'
     end
 
+    it "should work for a nested hash of association names" do
+      Post
+        .joins(ArelHelpers.join_association(Post, { comments: :author }))
+        .to_sql.should ==
+          'SELECT "posts".* FROM "posts" INNER JOIN "comments" ON "comments"."post_id" = "posts"."id" INNER JOIN "authors" ON "authors"."id" = "comments"."author_id"'
+    end
+
+    it "should work with outer joins when given a nested hash of association names" do
+      Post
+        .joins(ArelHelpers.join_association(Post, { comments: :author }, Arel::Nodes::OuterJoin))
+        .to_sql.should ==
+          'SELECT "posts".* FROM "posts" LEFT OUTER JOIN "comments" ON "comments"."post_id" = "posts"."id" LEFT OUTER JOIN "authors" ON "authors"."id" = "comments"."author_id"'
+    end
+
     it "should be able to handle multiple associations" do
       Post.joins(ArelHelpers.join_association(Post, [:comments, :favorites])).to_sql.should ==
         'SELECT "posts".* FROM "posts" INNER JOIN "comments" ON "comments"."post_id" = "posts"."id" INNER JOIN "favorites" ON "favorites"."post_id" = "posts"."id"'
@@ -65,6 +79,16 @@ describe ArelHelpers do
             'SELECT "posts".* FROM "posts" INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id" INNER JOIN "favorites" "bar" ON "bar"."post_id" = "posts"."id"'
         end
       end
+    end
+
+    it 'handles polymorphic through associations' do
+      relation = Location.joins(
+        ArelHelpers.join_association(Location, :community_tickets)
+      )
+
+      relation.to_sql.should == 'SELECT "locations".* FROM "locations" ' +
+        'INNER JOIN "card_locations" ON "card_locations"."location_id" = "locations"."id" AND "card_locations"."card_type" = \'CommunityTicket\' ' +
+        'INNER JOIN "community_tickets" ON "community_tickets"."id" = "card_locations"."card_id"'
     end
   end
 end
