@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version  = ::ArelHelpers::VERSION
   s.authors  = ["Cameron Dutro"]
   s.email    = ["camertron@gmail.com"]
-  s.homepage = "http://github.com/camertron"
+  s.homepage = "https://github.com/camertron/arel-helpers"
   s.license  = 'MIT'
   s.description = s.summary = "Useful tools to help construct database queries with ActiveRecord and Arel."
 
