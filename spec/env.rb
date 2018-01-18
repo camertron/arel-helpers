@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
-require 'env/models'
 require 'env/migrations'
+require 'env/models'
 
 module ArelHelpers
   class Env
