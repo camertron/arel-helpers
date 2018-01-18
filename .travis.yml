@@ -1,14 +1,21 @@
 sudo: false
 language: ruby
-rvm: 2.2.9
 before_install:
   - gem install bundler
-script: 'bundle exec rspec'
-env:
-  - 'AR="~> 3.1.0"'
-  - 'AR="~> 3.2.0"'
-  - 'AR="~> 4.0.0"'
-  - 'AR="~> 4.1.0"'
-  - 'AR="~> 4.2.0"'
-  - 'AR="~> 5.0.0"'
-  - 'AR="~> 5.1.0"'
+script: bundle exec rspec
+matrix:
+  include:
+  - env: AR="~> 3.1.0"
+    rvm: 2.2.9
+  - env: AR="~> 3.2.0"
+    rvm: 2.2.9
+  - env: AR="~> 4.0.0"
+    rvm: 2.3.6
+  - env: AR="~> 4.1.0"
+    rvm: 2.3.6
+  - env: AR="~> 4.2.0"
+    rvm: 2.5.0
+  - env: AR="~> 5.0.0"
+    rvm: 2.5.0
+  - env: AR="~> 5.1.0"
+    rvm: 2.5.0

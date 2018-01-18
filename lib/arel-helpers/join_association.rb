@@ -19,9 +19,9 @@ module ArelHelpers
       # It also allows you to use an outer join instead of the default inner via the join_type arg.
       def join_association(table, association, join_type = Arel::Nodes::InnerJoin, options = {}, &block)
         if ActiveRecord::VERSION::STRING >= '5.0.0'
-          join_association_5_0(table, association, join_type, &block)
+          join_association_5_0(table, association, join_type, options, &block)
         elsif ActiveRecord::VERSION::STRING >= '4.2.0'
-          join_association_4_2(table, association, join_type, &block)
+          join_association_4_2(table, association, join_type, options, &block)
         elsif ActiveRecord::VERSION::STRING >= '4.1.0'
           join_association_4_1(table, association, join_type, options, &block)
         else
@@ -101,6 +101,10 @@ module ArelHelpers
               join.right
             end
 
+            if found_alias = find_alias(join.left.name, aliases)
+              join.left.table_alias = found_alias.name
+            end
+
             join_type.new(join.left, right)
           end
         end
@@ -112,7 +116,8 @@ module ArelHelpers
         join_strings.join(' ')
       end
 
-      def join_association_5_0(table, association, join_type)
+      def join_association_5_0(table, association, join_type, options = {})
+        aliases = options.fetch(:aliases, [])
         associations = association.is_a?(Array) ? association : [association]
         join_dependency = ActiveRecord::Associations::JoinDependency.new(table, associations, [])
 
