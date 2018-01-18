@@ -1,3 +1,6 @@
+## 2.6.1
+* Fix homepage URL in gemspec.
+
 ## 2.6.0
 * Add the join alias helper.
 * Add ability to pass table aliases to join_association.
