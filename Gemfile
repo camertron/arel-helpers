@@ -3,8 +3,10 @@ source "https://rubygems.org"
 gemspec
 
 group :development, :test do
-  gem 'pry-nav'
-  gem 'rake'
+  gem 'pry-byebug'
+
+  # lock to 10.0 until rspec is upgraded
+  gem 'rake', '~> 10.0'
 end
 
 group :test do

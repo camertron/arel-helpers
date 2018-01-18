@@ -5,7 +5,7 @@ $:.push(File.dirname(__FILE__))
 require 'rspec'
 require 'arel-helpers'
 require 'fileutils'
-require 'pry-nav'
+require 'pry-byebug'
 
 require 'env'
 
