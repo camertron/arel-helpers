@@ -6,16 +6,18 @@ script: bundle exec rspec
 matrix:
   include:
   - env: AR="~> 3.1.0"
-    rvm: 2.2.9
+    rvm: 2.2.10
   - env: AR="~> 3.2.0"
-    rvm: 2.2.9
+    rvm: 2.2.10
   - env: AR="~> 4.0.0"
-    rvm: 2.3.6
+    rvm: 2.3.7
   - env: AR="~> 4.1.0"
-    rvm: 2.3.6
+    rvm: 2.3.7
   - env: AR="~> 4.2.0"
-    rvm: 2.5.0
+    rvm: 2.5.1
   - env: AR="~> 5.0.0"
-    rvm: 2.5.0
+    rvm: 2.5.1
   - env: AR="~> 5.1.0"
-    rvm: 2.5.0
+    rvm: 2.5.1
+  - env: AR="~> 5.2.0"
+    rvm: 2.5.1
