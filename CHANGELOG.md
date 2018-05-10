@@ -1,3 +1,6 @@
+## 2.7.0
+* Add support for Rails 5.2.
+
 ## 2.6.1
 * Fix homepage URL in gemspec.
 
