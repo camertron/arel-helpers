@@ -155,7 +155,7 @@ class PostQueryBuilder < ArelHelpers::QueryBuilder
   def with_comments_by(usernames)
     reflect(
       query
-        .joins(:comments => :author)
+        .joins(comments: :author)
         .where(author[:username].in(usernames))
     )
   end
