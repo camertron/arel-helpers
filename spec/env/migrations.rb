@@ -1,6 +1,10 @@
 # encoding: UTF-8
 
-SuperClass = ActiveRecord::VERSION::MAJOR >= 5 && ActiveRecord::VERSION::MINOR >= 1 ? ActiveRecord::Migration[5.1] : ActiveRecord::Migration
+SuperClass = if ActiveRecord::VERSION::MAJOR >= 5
+  ActiveRecord::Migration["#{ActiveRecord::VERSION::MAJOR}.#{ActiveRecord::VERSION::MINOR}".to_f]
+else
+  ActiveRecord::Migration
+end
 
 class CreatePostsTable < SuperClass
   def change

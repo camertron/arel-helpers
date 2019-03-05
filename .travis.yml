@@ -14,10 +14,12 @@ matrix:
   - env: AR="~> 4.1.0"
     rvm: 2.3.7
   - env: AR="~> 4.2.0"
-    rvm: 2.5.1
+    rvm: 2.5.3
   - env: AR="~> 5.0.0"
-    rvm: 2.5.1
+    rvm: 2.5.3
   - env: AR="~> 5.1.0"
-    rvm: 2.5.1
+    rvm: 2.5.3
   - env: AR="~> 5.2.0"
-    rvm: 2.5.1
+    rvm: 2.5.3
+  - env: AR="6.0.0.beta2"
+    rvm: 2.5.3

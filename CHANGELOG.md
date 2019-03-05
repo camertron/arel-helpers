@@ -1,3 +1,9 @@
+## 2.9.0
+* Add support for Rails 6.
+
+## 2.8.0
+* Add support for Rails 5.2.1, which changed the arity of several internal methods that we shamelessly use.
+
 ## 2.7.0
 * Add support for Rails 5.2.
 
