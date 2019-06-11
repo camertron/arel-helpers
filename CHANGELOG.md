@@ -1,3 +1,6 @@
+## 2.9.1
+* Remove has_rdoc from gemspec.
+
 ## 2.9.0
 * Add support for Rails 6.
 
