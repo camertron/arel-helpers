@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.description = s.summary = "Useful tools to help construct database queries with ActiveRecord and Arel."
 
   s.platform = Gem::Platform::RUBY
-  s.has_rdoc = true
 
   if ENV["AR"]
     s.add_dependency 'activerecord', ENV["AR"]
