@@ -12,5 +12,5 @@ end
 group :test do
   gem 'rspec', '~> 2.11.0'
   gem 'rr',    '~> 1.0.4'
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.0'
 end
