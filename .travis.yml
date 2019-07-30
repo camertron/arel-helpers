@@ -22,5 +22,5 @@ matrix:
     rvm: 2.5.3
   - env: AR="~> 5.2.0"
     rvm: 2.5.3
-  - env: AR="6.0.0.beta3"
+  - env: AR="6.0.0.rc2"
     rvm: 2.5.3
