@@ -6,21 +6,23 @@ before_install:
 script: bundle exec rspec
 matrix:
   include:
-  - env: AR="~> 3.1.0"
+  - gemfile: Gemfile-rails-3.1.x
     rvm: 2.2.10
-  - env: AR="~> 3.2.0"
+  - gemfile: Gemfile-rails-3.2.x
     rvm: 2.2.10
-  - env: AR="~> 4.0.0"
+  - gemfile: Gemfile-rails-4.0.x
     rvm: 2.3.7
-  - env: AR="~> 4.1.0"
+  - gemfile: Gemfile-rails-4.1.x
     rvm: 2.3.7
-  - env: AR="~> 4.2.0"
+  - gemfile: Gemfile-rails-4.2.x
     rvm: 2.5.3
-  - env: AR="~> 5.0.0"
+  - gemfile: Gemfile-rails-5.0.x
     rvm: 2.5.3
-  - env: AR="~> 5.1.0"
+  - gemfile: Gemfile-rails-5.1.x
     rvm: 2.5.3
-  - env: AR="~> 5.2.0"
+  - gemfile: Gemfile-rails-5.2.0
     rvm: 2.5.3
-  - env: AR="6.0.0.beta3"
+  - gemfile: Gemfile-rails-5.2.1
+    rvm: 2.5.3
+  - gemfile: Gemfile-rails-6.0.x
     rvm: 2.5.3

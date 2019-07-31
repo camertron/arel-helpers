@@ -1,8 +1,11 @@
+## 2.10.0
+* Add support for Rails 6 rc2.
+
 ## 2.9.1
 * Remove has_rdoc from gemspec.
 
 ## 2.9.0
-* Add support for Rails 6.
+* Add support for Rails 6 beta3.
 
 ## 2.8.0
 * Add support for Rails 5.2.1, which changed the arity of several internal methods that we shamelessly use.
