@@ -12,11 +12,11 @@ Gem::Specification.new do |s|
 
   s.platform = Gem::Platform::RUBY
 
-  if ENV["AR"]
-    s.add_dependency 'activerecord', ENV["AR"]
-  else
-    s.add_dependency 'activerecord', '>= 3.1.0', '< 7'
-  end
+  s.add_dependency 'activerecord', '>= 3.1.0', '< 7'
+
+  s.add_development_dependency 'rake', '~> 10.0'
+  s.add_development_dependency 'rspec', '~> 2.11'
+  s.add_development_dependency 'rr', '~> 1.0'
 
   s.require_path = 'lib'
   s.files = Dir["{lib,spec}/**/*", "Gemfile", "History.txt", "README.md", "Rakefile", "arel-helpers.gemspec"]
