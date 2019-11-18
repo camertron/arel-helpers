@@ -4,6 +4,23 @@ require 'forwardable'
 require 'enumerator'
 
 module ArelHelpers
+  module DefaultQueryChain
+    def chain(name)
+      mod = Module.new do
+        define_method(name) do |*args|
+          if (value = super(*args))
+            value
+          else
+            reflect(query)
+          end
+        end
+      end
+
+      prepend mod
+      name
+    end
+  end
+
   class QueryBuilder
     extend Forwardable
     include Enumerable

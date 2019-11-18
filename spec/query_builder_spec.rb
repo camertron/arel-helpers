@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 class TestQueryBuilder < ArelHelpers::QueryBuilder
+  extend ArelHelpers::DefaultQueryChain
+
   attr_accessor :params
   alias_method :params?, :params
 
@@ -12,6 +14,10 @@ class TestQueryBuilder < ArelHelpers::QueryBuilder
 
   def noop
     reflect(query)
+  end
+
+  chain def optional(skip:)
+    reflect(query.where(title: "BarBar")) unless skip
   end
 end
 
@@ -56,5 +62,15 @@ describe ArelHelpers::QueryBuilder do
       mock(builder).each.never
       builder.public_send(method)
     end
+  end
+
+  it "returns reflect on existing query if method returns a falsy value" do
+    builder.optional(skip: true).to_sql.strip.should == 'SELECT "posts".* FROM "posts"'
+  end
+
+  it "returns reflect on new query for default chainable method if value is truthy" do
+    builder.optional(skip: false).to_sql.strip.gsub(/\s+/, " ").should == %Q{
+      SELECT \"posts\".* FROM \"posts\" WHERE \"posts\".\"title\" = 'BarBar'
+    }.strip
   end
 end

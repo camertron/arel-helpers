@@ -187,6 +187,34 @@ PostQueryBuilder.new
   .since_yesterday
 ```
 
+#### Conditional reflections
+
+If you have parts of a query that should only be added under certain conditions you can return `reflect(query)` from your method. E.g:
+
+```ruby
+  def with_comments_by(usernames)
+    if usernames
+      reflect(
+        query.where(post[:title].matches("%#{title}%"))
+      )
+    else
+      reflect(query)
+    end
+  end
+```
+
+This can become repetetive, and as an alternarive you can choose to extend your `ArelHelpers::QueryBuilder` sub class with `ArelHelpers::DefaultQueryChain`:
+
+```ruby
+  class PostQueryBuilder < ArelHelpers::QueryBuilder
+    extend ArelHelpers::DefaultQueryChain
+
+    chain def with_comments_by(usernames)
+      reflect(query.where(post[:title].matches("%#{title}%"))) if usernames
+    end
+  end
+```
+
 ## Requirements
 
 Requires ActiveRecord >= 3.1.0, < 6, tested against Ruby 2.2.4. Depends on SQLite for testing purposes.
