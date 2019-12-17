@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 class TestQueryBuilder < ArelHelpers::QueryBuilder
-  extend ArelHelpers::DefaultQueryChain
-
   attr_accessor :params
   alias_method :params?, :params
 
@@ -16,7 +14,7 @@ class TestQueryBuilder < ArelHelpers::QueryBuilder
     reflect(query)
   end
 
-  chain def optional(skip:)
+  not_nil def optional(skip:)
     reflect(query.where(title: "BarBar")) unless skip
   end
 end

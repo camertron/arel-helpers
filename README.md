@@ -203,13 +203,11 @@ If you have parts of a query that should only be added under certain conditions 
   end
 ```
 
-This can become repetetive, and as an alternarive you can choose to extend your `ArelHelpers::QueryBuilder` sub class with `ArelHelpers::DefaultQueryChain`:
+This can become repetitive, and as an alternative you can choose to prepend `not_nil` to your method definition:
 
 ```ruby
   class PostQueryBuilder < ArelHelpers::QueryBuilder
-    extend ArelHelpers::DefaultQueryChain
-
-    chain def with_comments_by(usernames)
+    not_nil def with_comments_by(usernames)
       reflect(query.where(post[:title].matches("%#{title}%"))) if usernames
     end
   end
