@@ -1,3 +1,7 @@
+## 2.11.0
+* Allow consumers of ArelHelpers::QueryBuilder to chain on falsy return (@ramhoj #44).
+  - Add `not_nil` in front of builder methods to opt-in.
+
 ## 2.10.0
 * Add support for Rails 6 rc2.
 
