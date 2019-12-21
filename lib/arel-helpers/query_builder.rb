@@ -16,6 +16,21 @@ module ArelHelpers
 
     def_delegators :@query, *TERMINAL_METHODS
 
+    def self.not_nil(name)
+      mod = Module.new do
+        define_method(name) do |*args|
+          if (value = super(*args))
+            value
+          else
+            reflect(query)
+          end
+        end
+      end
+
+      prepend mod
+      name
+    end
+
     def initialize(query)
       @query = query
     end
