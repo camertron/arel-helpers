@@ -1,30 +1,28 @@
-# encoding: UTF-8
-
 require 'spec_helper'
 
 describe ArelHelpers::ArelTable do
-  it "should add the [] function to the model and allow attribute access" do
+  it 'should add the [] function to the model and allow attribute access' do
     Post[:id].tap do |post_id|
-      post_id.should be_a(Arel::Attribute)
-      post_id.name.should == :id
-      post_id.relation.name.should == "posts"
+      expect(post_id).to be_a Arel::Attribute
+      expect(post_id.name).to eq :id
+      expect(post_id.relation.name).to eq 'posts'
     end
   end
 
-  it "should not interfere with associations" do
+  it 'should not interfere with associations' do
     post = Post.create(title: "I'm a little teapot")
-    post.comments[0].should be_nil
+    expect(post.comments[0]).to be_nil
   end
 
-  it "should allow retrieving associated records" do
+  it 'should allow retrieving associated records' do
     post = Post.create(title: "I'm a little teapot")
     comment = post.comments.create
-    post.reload.comments[0].id.should == comment.id
+    expect(post.reload.comments[0].id).to eq comment.id
   end
 
-  it "does not interfere with ActiveRecord::Relation objects" do
-    Post.all[0].should be_nil
+  it 'does not interfere with ActiveRecord::Relation objects' do
+    expect(Post.all[0]).to be_nil
     p = Post.create(title: 'foo')
-    Post.all[0].id.should == p.id
+    expect(Post.all[0].id).to eq p.id
   end
 end

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 class Post < ActiveRecord::Base
   include ArelHelpers::ArelTable
   include ArelHelpers::Aliases
@@ -44,12 +42,10 @@ end
 
 class Location < ActiveRecord::Base
   has_many :card_locations
-  has_many :community_tickets, {
-    through: :card_locations, source: :card, source_type: 'CommunityTicket'
-  }
+  has_many :community_tickets, through: :card_locations, source: :card, source_type: 'CommunityTicket'
 end
 
 class CommunityTicket < ActiveRecord::Base
-  has_many :card_locations, as: :card, source_type: 'CommunityTicket'
+  has_many :card_locations, as: :card
   has_many :locations, through: :card_locations
 end

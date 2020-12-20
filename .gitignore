@@ -1,4 +1,7 @@
-Gemfile*.lock
+Gemfile.lock
+gemfiles/*.gemfile.lock
+spec/internal/db/combustion_test.sqlite
+spec/internal/log/*
 pkg/
 tmp/
 .DS_Store
