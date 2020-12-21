@@ -26,3 +26,5 @@ matrix:
     rvm: 2.5.3
   - gemfile: gemfiles/rails_6.0.x.gemfile
     rvm: 2.5.3
+  - gemfile: gemfiles/rails_6.1.x.gemfile
+    rvm: 2.5.3

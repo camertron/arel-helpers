@@ -4,7 +4,7 @@ describe ArelHelpers::ArelTable do
   it 'should add the [] function to the model and allow attribute access' do
     Post[:id].tap do |post_id|
       expect(post_id).to be_a Arel::Attribute
-      expect(post_id.name).to eq :id
+      expect(post_id.name.to_s).to eq 'id'
       expect(post_id.relation.name).to eq 'posts'
     end
   end

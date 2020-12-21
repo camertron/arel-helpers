@@ -18,7 +18,9 @@ module ArelHelpers
       # This method encapsulates that functionality and yields an intermediate object for chaining.
       # It also allows you to use an outer join instead of the default inner via the join_type arg.
       def join_association(table, association, join_type = Arel::Nodes::InnerJoin, options = {}, &block)
-        if version >= '6.0.0'
+        if version >= '6.1.0'
+          join_association_6_1_0(table, association, join_type, options, &block)
+        elsif version >= '6.0.0'
           join_association_6_0_0(table, association, join_type, options, &block)
         elsif version >= '5.2.1'
           join_association_5_2_1(table, association, join_type, options, &block)
@@ -42,7 +44,7 @@ module ArelHelpers
       end
 
       def join_association_3_1(table, association, join_type, options = {})
-        aliases = options.fetch(:aliases, {})
+        aliases = options.fetch(:aliases, []).index_by(&:table_name)
         associations = association.is_a?(Array) ? association : [association]
         join_dependency = ActiveRecord::Associations::JoinDependency.new(table, associations, [])
         manager = Arel::SelectManager.new(table)
@@ -53,12 +55,9 @@ module ArelHelpers
         end
 
         manager.join_sources.map do |assoc|
-          if found_alias = find_alias(assoc.left.name, aliases)
-            assoc.left.table_alias = found_alias.name
-          end
+          assoc.left.table_alias = aliases[assoc.left.name].name if aliases.key?(assoc.left.name)
 
           if block_given?
-            # yield |assoc_name, join_conditions|
             right = yield assoc.left.name.to_sym, assoc.right
             assoc.class.new(assoc.left, right)
           else
@@ -68,7 +67,7 @@ module ArelHelpers
       end
 
       def join_association_4_1(table, association, join_type, options = {})
-        aliases = options.fetch(:aliases, {})
+        aliases = options.fetch(:aliases, []).index_by(&:table_name)
         associations = association.is_a?(Array) ? association : [association]
         join_dependency = ActiveRecord::Associations::JoinDependency.new(table, associations, [])
 
@@ -79,9 +78,7 @@ module ArelHelpers
             constraint.right
           end
 
-          if found_alias = find_alias(constraint.left.name, aliases)
-            constraint.left.table_alias = found_alias.name
-          end
+          constraint.left.table_alias = aliases[constraint.left.name].name if aliases.key?(constraint.left.name)
 
           join_type.new(constraint.left, right)
         end
@@ -93,7 +90,7 @@ module ArelHelpers
       # dynamically. To get around the problem, this method must return
       # a string.
       def join_association_4_2(table, association, join_type, options = {})
-        aliases = options.fetch(:aliases, [])
+        aliases = options.fetch(:aliases, []).index_by(&:table_name)
         associations = association.is_a?(Array) ? association : [association]
         join_dependency = ActiveRecord::Associations::JoinDependency.new(table, associations, [])
 
@@ -111,9 +108,7 @@ module ArelHelpers
               join.right
             end
 
-            if found_alias = find_alias(join.left.name, aliases)
-              join.left.table_alias = found_alias.name
-            end
+            join.left.table_alias = aliases[join.left.name].name if aliases.key?(join.left.name)
 
             join_type.new(join.left, right)
           end
@@ -127,7 +122,7 @@ module ArelHelpers
       end
 
       def join_association_5_0(table, association, join_type, options = {})
-        aliases = options.fetch(:aliases, [])
+        aliases = options.fetch(:aliases, []).index_by(&:table_name)
         associations = association.is_a?(Array) ? association : [association]
         join_dependency = ActiveRecord::Associations::JoinDependency.new(table, associations, [])
 
@@ -146,9 +141,7 @@ module ArelHelpers
               join.right
             end
 
-            if found_alias = find_alias(join.left.name, aliases)
-              join.left.table_alias = found_alias.name
-            end
+            join.left.table_alias = aliases[join.left.name].name if aliases.key?(join.left.name)
 
             join_type.new(join.left, right)
           end
@@ -162,7 +155,7 @@ module ArelHelpers
       end
 
       def join_association_5_2(table, association, join_type, options = {})
-        aliases = options.fetch(:aliases, [])
+        aliases = options.fetch(:aliases, []).index_by(&:table_name)
         associations = association.is_a?(Array) ? association : [association]
 
         alias_tracker = ActiveRecord::Associations::AliasTracker.create(
@@ -182,16 +175,14 @@ module ArelHelpers
             join.right
           end
 
-          if found_alias = find_alias(join.left.name, aliases)
-            join.left.table_alias = found_alias.name
-          end
+          join.left.table_alias = aliases[join.left.name].name if aliases.key?(join.left.name)
 
           join_type.new(join.left, right)
         end
       end
 
       def join_association_5_2_1(table, association, join_type, options = {})
-        aliases = options.fetch(:aliases, [])
+        aliases = options.fetch(:aliases, []).index_by(&:table_name)
         associations = association.is_a?(Array) ? association : [association]
 
         alias_tracker = ActiveRecord::Associations::AliasTracker.create(
@@ -211,16 +202,14 @@ module ArelHelpers
             join.right
           end
 
-          if found_alias = find_alias(join.left.name, aliases)
-            join.left.table_alias = found_alias.name
-          end
+          join.left.table_alias = aliases[join.left.name].name if aliases.key?(join.left.name)
 
           join_type.new(join.left, right)
         end
       end
 
       def join_association_6_0_0(table, association, join_type, options = {})
-        aliases = options.fetch(:aliases, [])
+        aliases = options.fetch(:aliases, []).index_by(&:table_name)
         associations = association.is_a?(Array) ? association : [association]
 
         alias_tracker = ActiveRecord::Associations::AliasTracker.create(
@@ -240,11 +229,53 @@ module ArelHelpers
             join.right
           end
 
-          if found_alias = find_alias(join.left.name, aliases)
-            join.left.table_alias = found_alias.name
-          end
+          join.left.table_alias = aliases[join.left.name].name if aliases.key?(join.left.name)
 
           join_type.new(join.left, right)
+        end
+      end
+
+      def join_association_6_1_0(table, association, join_type, options = {})
+        aliases = options.fetch(:aliases, []).index_by(&:table_name)
+        associations = association.is_a?(Array) ? association : [association]
+
+        alias_tracker = ActiveRecord::Associations::AliasTracker.create(
+          table.connection, table.name, {}
+        )
+
+        join_dependency = ActiveRecord::Associations::JoinDependency.new(
+          table, table.arel_table, associations, join_type
+        )
+
+        constraints = join_dependency.join_constraints([], alias_tracker, [])
+
+        constraints.map do |join|
+          apply_aliases(join, aliases)
+
+          right = if block_given?
+                    yield join.left.name.to_sym, join.right
+                  else
+                    join.right
+                  end
+
+          join_type.new(join.left, right)
+        end
+      end
+
+      def apply_aliases(node, aliases)
+        case node
+        when Arel::Nodes::Join
+          node.left = aliases[node.left.name] || node.left
+          apply_aliases(node.right, aliases)
+        when Arel::Attributes::Attribute
+          node.relation = aliases[node.relation.name] || node.relation
+        when Arel::Nodes::And
+          node.children.each { |child| apply_aliases(child, aliases) }
+        when Arel::Nodes::Unary
+          apply_aliases(node.value, aliases)
+        when Arel::Nodes::Binary
+          apply_aliases(node.left, aliases)
+          apply_aliases(node.right, aliases)
         end
       end
 
@@ -254,10 +285,6 @@ module ArelHelpers
         visitor = table.connection.visitor
         collect = visitor.accept(node, Arel::Collectors::Bind.new)
         collect.substitute_binds(binds).join
-      end
-
-      def find_alias(name, aliases)
-        aliases.find { |a| a.table_name == name }
       end
     end
   end
