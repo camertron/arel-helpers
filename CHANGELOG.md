@@ -1,3 +1,7 @@
+## 2.12.0
+* Streamline spec setup using appraisal, combustion and database_cleaner gems (@hasghari #45)
+* Add support for Rails 6.1 (@hasghari #45)
+
 ## 2.11.0
 * Allow consumers of ArelHelpers::QueryBuilder to chain on falsy return (@ramhoj #44).
   - Add `not_nil` in front of builder methods to opt-in.
