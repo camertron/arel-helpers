@@ -1,29 +1,20 @@
-# encoding: UTF-8
-
-$:.push(File.dirname(__FILE__))
+$LOAD_PATH.push(File.dirname(__FILE__))
 
 require 'rspec'
 require 'arel-helpers'
 require 'fileutils'
 
-require 'env'
+require 'combustion'
+Combustion.initialize! :active_record
 
-def silence(&block)
-  original_stdout = $stdout
-  $stdout = StringIO.new
-  begin
-    yield
-  ensure
-    $stdout = original_stdout
-  end
-end
+require 'database_cleaner'
+require 'env/models'
 
 RSpec.configure do |config|
-  config.mock_with :rr
+  DatabaseCleaner.strategy = :transaction
 
-  config.before(:each) do
-    ArelHelpers::Env.establish_connection
-    ArelHelpers::Env.reset
-    silence { ArelHelpers::Env.migrate }
-  end
+  config.before(:suite) { DatabaseCleaner.clean_with :truncation }
+
+  config.before { DatabaseCleaner.start }
+  config.after  { DatabaseCleaner.clean }
 end
