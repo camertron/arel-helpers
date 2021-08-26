@@ -215,7 +215,7 @@ This can become repetitive, and as an alternative you can choose to prepend `not
 
 ## Requirements
 
-Requires ActiveRecord >= 3.1.0, < 6, tested against Ruby 2.2.4. Depends on SQLite for testing purposes.
+Requires ActiveRecord >= 3.1.0, < 7. Depends on SQLite for testing purposes.
 
 ## Running Tests
 
