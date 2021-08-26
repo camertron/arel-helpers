@@ -18,8 +18,8 @@ module ArelHelpers
 
     def self.not_nil(name)
       mod = Module.new do
-        define_method(name) do |*args|
-          if (value = super(*args))
+        define_method(name) do |*args, **kwargs|
+          if (value = super(*args, **kwargs))
             value
           else
             reflect(query)

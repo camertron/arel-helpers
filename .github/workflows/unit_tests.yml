@@ -28,6 +28,8 @@ jobs:
             ruby-version: 2.5.3
           - gemfile: gemfiles/rails_6.1.x.gemfile
             ruby-version: 2.7.4
+          - gemfile: gemfiles/rails_6.1.x.gemfile
+            ruby-version: 3.0.2
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby ${{ matrix.ruby-version }}
