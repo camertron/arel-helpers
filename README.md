@@ -1,6 +1,6 @@
 ![Unit Tests](https://github.com/camertron/arel-helpers/actions/workflows/unit_tests.yml/badge.svg?branch=master)
 
-## arel-helpers [![Build Status](https://secure.travis-ci.org/camertron/arel-helpers.png?branch=master)](http://travis-ci.org/camertron/arel-helpers)
+## arel-helpers
 
 Useful tools to help construct database queries with ActiveRecord and Arel.
 
