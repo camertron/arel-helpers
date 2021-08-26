@@ -28,8 +28,6 @@ jobs:
             ruby-version: 2.5.3
           - gemfile: gemfiles/rails_6.1.x.gemfile
             ruby-version: 2.7.4
-          - gemfile: gemfiles/rails_6.1.x.gemfile
-            ruby-version: 3.0.2
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby ${{ matrix.ruby-version }}
@@ -38,6 +36,6 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
       - name: Run Tests
-        run: bundle install --jobs 3 --retry 3 && bundle exec rspec
+        run: bundle exec rspec
         env:
           BUNDLE_GEMFILE: ${{ matrix.gemfile }}
