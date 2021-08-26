@@ -38,6 +38,6 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
       - name: Run Tests
-        run: bundle exec rspec
+        run: bundle install --jobs 3 --retry 3 && bundle exec rspec
         env:
           BUNDLE_GEMFILE: ${{ matrix.gemfile }}
