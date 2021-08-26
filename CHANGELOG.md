@@ -1,3 +1,7 @@
+## 2.12.1
+* Support Ruby 3.0.
+* Move to GitHub actions.
+
 ## 2.12.0
 * Streamline spec setup using appraisal, combustion and database_cleaner gems (@hasghari #45)
 * Add support for Rails 6.1 (@hasghari #45)
