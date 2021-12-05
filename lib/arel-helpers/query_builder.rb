@@ -9,7 +9,7 @@ module ArelHelpers
     include Enumerable
 
     attr_reader :query
-    def_delegators :@query, :to_a, :to_sql, :each
+    def_delegators :@query, :to_a, :to_sql, :each, :empty?, :size
 
     TERMINAL_METHODS = [:count, :first, :last]
     TERMINAL_METHODS << :pluck if ActiveRecord::VERSION::MAJOR >= 4
