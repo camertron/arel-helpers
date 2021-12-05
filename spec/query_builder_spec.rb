@@ -53,6 +53,14 @@ describe ArelHelpers::QueryBuilder do
     expect(builder.map(&:title)).to eq ['Foobar']
   end
 
+  it 'forwards #empty?' do
+    expect(builder.empty?).to eq true
+  end
+
+  it 'forwards #size' do
+    expect(builder.size).to eq 0
+  end
+
   ArelHelpers::QueryBuilder::TERMINAL_METHODS.each do |method|
     it "does not enumerate records for #{method}" do
       allow(builder).to receive :each
