@@ -1,3 +1,6 @@
+## 2.13.0
+* In `QueryBuilder`, delegate `#empty?` and `#size` to `@query` (@net1957, #47)
+
 ## 2.12.1
 * Support Ruby 3.0.
 * Move to GitHub actions.
