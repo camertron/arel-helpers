@@ -6,6 +6,9 @@ class TestQueryBuilder < ArelHelpers::QueryBuilder
 
   def initialize(query = nil)
     super(query || Post.unscoped)
+
+    # only necessary for the test environment to prevent pollution between tests
+    @query.reload
   end
 
   def noop
