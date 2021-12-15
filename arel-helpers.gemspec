@@ -23,4 +23,5 @@ Gem::Specification.new do |s|
 
   s.require_path = 'lib'
   s.files = Dir['{lib,spec}/**/*', 'Gemfile', 'History.txt', 'README.md', 'Rakefile', 'arel-helpers.gemspec']
+  s.files -= Dir['spec/internal/log', 'spec/internal/log/**/*', 'spec/internal/db', 'spec/internal/db/**/*']
 end
