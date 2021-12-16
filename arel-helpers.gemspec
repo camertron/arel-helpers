@@ -12,12 +12,12 @@ Gem::Specification.new do |s|
 
   s.platform = Gem::Platform::RUBY
 
-  s.add_dependency 'activerecord', '>= 3.1.0', '< 7'
+  s.add_dependency 'activerecord', '>= 3.1.0', '< 8'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'combustion', '~> 1.3'
   s.add_development_dependency 'database_cleaner', '~> 1.8'
-  s.add_development_dependency 'rake', '~> 10.0'
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '~> 3'
   s.add_development_dependency 'sqlite3', '~> 1.4.0'
 
