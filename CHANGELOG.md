@@ -1,3 +1,6 @@
+## 2.14.0
+* Add support for Rails 7.
+
 ## 2.13.0
 * In `QueryBuilder`, delegate `#empty?` and `#size` to `@query` (@net1957, #47)
 
