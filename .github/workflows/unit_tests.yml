@@ -2,20 +2,16 @@ name: Unit Tests
 on:
   pull_request:
     branches:
-      - '*'
+      - "*"
   push:
     branches:
-      - '*'
+      - "master"
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
-          - gemfile: gemfiles/rails_3.1.x.gemfile
-            ruby-version: 2.2
-          - gemfile: gemfiles/rails_3.2.x.gemfile
-            ruby-version: 2.2
           - gemfile: gemfiles/rails_4.0.x.gemfile
             ruby-version: 2.3
           - gemfile: gemfiles/rails_4.1.x.gemfile
@@ -38,8 +34,14 @@ jobs:
             ruby-version: 3.0
           - gemfile: gemfiles/rails_7.0.x.gemfile
             ruby-version: 3.0
+          - gemfile: gemfiles/rails_7.1.x.gemfile
+            ruby-version: 3.1
+          - gemfile: gemfiles/rails_7.1.x.gemfile
+            ruby-version: 3.2
+          - gemfile: gemfiles/rails_7.2.x.gemfile
+            ruby-version: 3.3
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Ruby ${{ matrix.ruby-version }}
         uses: ruby/setup-ruby@v1
         with:
