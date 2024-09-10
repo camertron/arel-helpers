@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'database_cleaner', '~> 2.0'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '~> 3'
-  s.add_development_dependency 'sqlite3', '~> 1.4.0'
+  s.add_development_dependency 'sqlite3', '~> 1.4'
 
   s.require_path = 'lib'
   s.files = Dir['{lib,spec}/**/*', 'Gemfile', 'History.txt', 'README.md', 'Rakefile', 'arel-helpers.gemspec']
