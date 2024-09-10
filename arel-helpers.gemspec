@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'combustion', '~> 1.3'
-  s.add_development_dependency 'database_cleaner', '~> 1.8'
+  s.add_development_dependency 'database_cleaner', '~> 2.0'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec', '~> 3'
   s.add_development_dependency 'sqlite3', '~> 1.4.0'
