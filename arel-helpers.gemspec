@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
 
   s.platform = Gem::Platform::RUBY
 
-  s.add_dependency 'activerecord', '>= 3.1.0', '< 8'
+  s.add_dependency 'activerecord', '>= 3.1.0', '< 8.1'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'combustion', '~> 1.3'

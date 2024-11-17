@@ -215,7 +215,7 @@ This can become repetitive, and as an alternative you can choose to prepend `not
 
 ## Requirements
 
-Requires ActiveRecord >= 3.1.0, < 8. Depends on SQLite for testing purposes.
+Requires ActiveRecord >= 3.1.0, < 8.1. Depends on SQLite for testing purposes.
 
 ## Running Tests
 
@@ -223,4 +223,4 @@ Requires ActiveRecord >= 3.1.0, < 8. Depends on SQLite for testing purposes.
 
 ## Authors
 
-* Cameron C. Dutro: http://github.com/camertron
+- Cameron C. Dutro: http://github.com/camertron
