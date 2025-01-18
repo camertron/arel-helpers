@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+require 'logger'
 require 'active_record'
 
 begin
