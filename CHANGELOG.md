@@ -1,3 +1,6 @@
+## 2.17.0
+* Allow Rails 8.1 (@palkan && @camertron, #57)
+
 ## 2.16.0
 * Add support for Rails 8.0 (@jprosevear, #56)
 

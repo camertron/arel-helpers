@@ -103,7 +103,11 @@ describe ArelHelpers do
           ArelHelpers.join_association(Post, :comments, Arel::Nodes::InnerJoin, aliases: [foo])
         ).to_sql
 
-        expect(sql).to eq 'SELECT "posts".* FROM "posts" INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id"'
+        if ActiveRecord::VERSION::STRING < "8.1.0"
+          expect(sql).to eq 'SELECT "posts".* FROM "posts" INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id"'
+        else
+          expect(sql).to eq 'SELECT "posts".* FROM "posts" INNER JOIN "comments" AS "foo" ON "foo"."post_id" = "posts"."id"'
+        end
       end
     end
 
@@ -114,11 +118,19 @@ describe ArelHelpers do
             ArelHelpers.join_association(Post, %i[comments favorites], Arel::Nodes::InnerJoin, aliases: [foo, bar])
           ).to_sql
 
-          expect(sql).to eq <<-SQL.squish
-            SELECT "posts".* FROM "posts"
-              INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id"
-              INNER JOIN "favorites" "bar" ON "bar"."post_id" = "posts"."id"
-          SQL
+          if ActiveRecord::VERSION::STRING < "8.1.0"
+            expect(sql).to eq <<-SQL.squish
+              SELECT "posts".* FROM "posts"
+                INNER JOIN "comments" "foo" ON "foo"."post_id" = "posts"."id"
+                INNER JOIN "favorites" "bar" ON "bar"."post_id" = "posts"."id"
+            SQL
+          else
+            expect(sql).to eq <<-SQL.squish
+              SELECT "posts".* FROM "posts"
+                INNER JOIN "comments" AS "foo" ON "foo"."post_id" = "posts"."id"
+                INNER JOIN "favorites" AS "bar" ON "bar"."post_id" = "posts"."id"
+            SQL
+          end
         end
       end
     end

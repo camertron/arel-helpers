@@ -54,3 +54,11 @@ end
 appraise 'rails-7.0.x' do
   gem 'activerecord', '~> 7.0.0'
 end
+
+appraise 'rails-8.0.x' do
+  gem 'activerecord', '~> 8.0.0'
+end
+
+appraise 'rails-8.1.x' do
+  gem 'activerecord', '~> 8.1.0'
+end
